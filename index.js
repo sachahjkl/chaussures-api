@@ -32,7 +32,7 @@ app.use((_req, res, next) => {
 
 // Routes
 
-app.post('/chaussure', require('./logic.js').default.addChaussure);
+app.post('/chaussure', require('./logic').addChaussure);
 
 app.get('/', (_request, response) => {
     response.json({ info: 'Node.js, Express, and Postgres API' });

@@ -15,6 +15,6 @@ const addChaussure = (request, response) => {
     });
 };
 
-export default {
+module.exports = {
     addChaussure
 };
