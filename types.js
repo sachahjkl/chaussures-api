@@ -1,4 +1,2 @@
-module.exports = {
-    colors: ["RED", 'BLUE', 'YELLOW', 'GREEN', 'ORANGE', 'PURPLE'],
-    style: ['tennis', 'running', 'boots', 'moccasins', 'sandals']
-}
+export const colors = ['RED', 'BLUE', 'YELLOW', 'GREEN', 'ORANGE', 'PURPLE'];
+export const style = ['tennis', 'running', 'boots', 'moccasins', 'sandals'];

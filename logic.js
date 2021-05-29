@@ -1,20 +1,21 @@
-const pool = require('./db');
+import pool from './db.js';
+import { colors } from './types.js';
 
 const addChaussure = (request, response) => {
-    const { color, length } = request.body;
+  const { color, length } = request.body;
 
-    if (colors.indexOf(color) === -1) {
-        response.status(400).send(`Color ${color} not in available colors ${colors}`);
+  if (colors.indexOf(color) === -1) {
+    response.status(400).send(`Color ${color} not in available colors ${colors}`);
+  }
+
+  pool.query('INSERT INTO chaussure (color, length) VALUES ($1, $2)', [color, length], (error, results) => {
+    if (error) {
+      throw error;
     }
-
-    pool.query('INSERT INTO chaussure (color, length) VALUES ($1, $2)', [color, length], (error, results) => {
-        if (error) {
-            throw error;
-        }
-        response.status(201).send(`User added with ID: ${results.insertId}`);
-    });
+    response.status(201).send(`User added with ID: ${results.insertId}`);
+  });
 };
 
-module.exports = {
-    addChaussure
+export {
+  addChaussure as default,
 };
