@@ -1,0 +1,15 @@
+{
+  "name": "chaussures-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Benoît GORNET",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "pg": "^8.6.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
