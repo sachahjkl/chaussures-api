@@ -1,21 +1,40 @@
+import { request } from 'express';
 import pool from './db.js';
-import { colors } from './types.js';
 
-const addChaussure = (request, response) => {
-  const { color, length } = request.body;
+export const getCouleurs = (callback) => {
 
-  if (colors.indexOf(color) === -1) {
-    response.status(400).send(`Color ${color} not in available colors ${colors}`);
-  }
-
-  pool.query('INSERT INTO chaussure (color, length) VALUES ($1, $2)', [color, length], (error, results) => {
+  pool.query('SELECT value FROM couleur', (error, result) => {
     if (error) {
       throw error;
     }
-    response.status(201).send(`User added with ID: ${results.insertId}`);
+    callback(result.rows);
   });
 };
 
-export {
-  addChaussure as default,
+export const getChaussuresDispos = (callback) => {
+  pool.query(`SELECT * FROM chaussure  WHERE id NOT IN (
+    SELECT gauche_id as id FROM paire UNION SELECT droite_id as id FROM paire
+  )`, (error, result) => {
+    if (error) {
+      throw error;
+    }
+    callback(result.rows);
+  });
 };
+
+export const getCouleur = (id, callback) =>  {
+  pool.query('SELECT value FROM couleur WHERE id = $1', [id], (error, result) => {
+    if (error) {
+      throw error;
+    }
+    callback(result.rows[0]);
+    // response.status(201).send(result.rows[0]);
+  });
+};
+
+
+export const getNewPaire = (request, response) => {
+  getChaussuresDispos((chaussures) => {
+
+  });
+};;
