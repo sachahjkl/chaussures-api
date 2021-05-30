@@ -1,0 +1,281 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.3
+-- Dumped by pg_dump version 13.3
+
+-- Started on 2021-05-30 23:51:20
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 2 (class 3079 OID 16419)
+-- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
+
+
+--
+-- TOC entry 3026 (class 0 OID 0)
+-- Dependencies: 2
+-- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
+
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 204 (class 1259 OID 24585)
+-- Name: chaussure; Type: TABLE; Schema: public; Owner: chaussures
+--
+
+CREATE TABLE public.chaussure (
+    id integer NOT NULL,
+    color_id integer NOT NULL,
+    pied "char"
+);
+
+
+ALTER TABLE public.chaussure OWNER TO chaussures;
+
+--
+-- TOC entry 203 (class 1259 OID 24583)
+-- Name: chaussure_id_seq; Type: SEQUENCE; Schema: public; Owner: chaussures
+--
+
+ALTER TABLE public.chaussure ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.chaussure_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 202 (class 1259 OID 24578)
+-- Name: couleur; Type: TABLE; Schema: public; Owner: chaussures
+--
+
+CREATE TABLE public.couleur (
+    id integer NOT NULL,
+    value character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.couleur OWNER TO chaussures;
+
+--
+-- TOC entry 201 (class 1259 OID 24576)
+-- Name: couleur_id_seq; Type: SEQUENCE; Schema: public; Owner: chaussures
+--
+
+ALTER TABLE public.couleur ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.couleur_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 206 (class 1259 OID 24598)
+-- Name: paire; Type: TABLE; Schema: public; Owner: chaussures
+--
+
+CREATE TABLE public.paire (
+    id integer NOT NULL,
+    gauche_id integer NOT NULL,
+    droite_id integer NOT NULL
+);
+
+
+ALTER TABLE public.paire OWNER TO chaussures;
+
+--
+-- TOC entry 205 (class 1259 OID 24596)
+-- Name: paire_id_seq; Type: SEQUENCE; Schema: public; Owner: chaussures
+--
+
+ALTER TABLE public.paire ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.paire_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 3018 (class 0 OID 24585)
+-- Dependencies: 204
+-- Data for Name: chaussure; Type: TABLE DATA; Schema: public; Owner: chaussures
+--
+
+COPY public.chaussure (id, color_id, pied) FROM stdin;
+2	2	g
+3	4	g
+4	2	d
+5	4	d
+\.
+
+
+--
+-- TOC entry 3016 (class 0 OID 24578)
+-- Dependencies: 202
+-- Data for Name: couleur; Type: TABLE DATA; Schema: public; Owner: chaussures
+--
+
+COPY public.couleur (id, value) FROM stdin;
+2	bleu
+3	rouge
+4	jaune
+5	violet
+6	rose
+7	vert
+8	blanc
+9	noir
+\.
+
+
+--
+-- TOC entry 3020 (class 0 OID 24598)
+-- Dependencies: 206
+-- Data for Name: paire; Type: TABLE DATA; Schema: public; Owner: chaussures
+--
+
+COPY public.paire (id, gauche_id, droite_id) FROM stdin;
+1	2	5
+\.
+
+
+--
+-- TOC entry 3027 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: chaussure_id_seq; Type: SEQUENCE SET; Schema: public; Owner: chaussures
+--
+
+SELECT pg_catalog.setval('public.chaussure_id_seq', 5, true);
+
+
+--
+-- TOC entry 3028 (class 0 OID 0)
+-- Dependencies: 201
+-- Name: couleur_id_seq; Type: SEQUENCE SET; Schema: public; Owner: chaussures
+--
+
+SELECT pg_catalog.setval('public.couleur_id_seq', 9, true);
+
+
+--
+-- TOC entry 3029 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: paire_id_seq; Type: SEQUENCE SET; Schema: public; Owner: chaussures
+--
+
+SELECT pg_catalog.setval('public.paire_id_seq', 1, true);
+
+
+--
+-- TOC entry 2876 (class 2606 OID 24589)
+-- Name: chaussure chaussure_pkey; Type: CONSTRAINT; Schema: public; Owner: chaussures
+--
+
+ALTER TABLE ONLY public.chaussure
+    ADD CONSTRAINT chaussure_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2874 (class 2606 OID 24582)
+-- Name: couleur couleur_pkey; Type: CONSTRAINT; Schema: public; Owner: chaussures
+--
+
+ALTER TABLE ONLY public.couleur
+    ADD CONSTRAINT couleur_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2881 (class 2606 OID 24602)
+-- Name: paire paire_pkey; Type: CONSTRAINT; Schema: public; Owner: chaussures
+--
+
+ALTER TABLE ONLY public.paire
+    ADD CONSTRAINT paire_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2877 (class 1259 OID 24595)
+-- Name: fki_chaussure_color_fk; Type: INDEX; Schema: public; Owner: chaussures
+--
+
+CREATE INDEX fki_chaussure_color_fk ON public.chaussure USING btree (color_id);
+
+
+--
+-- TOC entry 2878 (class 1259 OID 24614)
+-- Name: fki_paire_chaussure_droite_fk; Type: INDEX; Schema: public; Owner: chaussures
+--
+
+CREATE INDEX fki_paire_chaussure_droite_fk ON public.paire USING btree (droite_id);
+
+
+--
+-- TOC entry 2879 (class 1259 OID 24608)
+-- Name: fki_paire_chaussure_gauche_fk; Type: INDEX; Schema: public; Owner: chaussures
+--
+
+CREATE INDEX fki_paire_chaussure_gauche_fk ON public.paire USING btree (gauche_id);
+
+
+--
+-- TOC entry 2882 (class 2606 OID 24590)
+-- Name: chaussure chaussure_color_fk; Type: FK CONSTRAINT; Schema: public; Owner: chaussures
+--
+
+ALTER TABLE ONLY public.chaussure
+    ADD CONSTRAINT chaussure_color_fk FOREIGN KEY (color_id) REFERENCES public.couleur(id) NOT VALID;
+
+
+--
+-- TOC entry 2884 (class 2606 OID 24609)
+-- Name: paire paire_chaussure_droite_fk; Type: FK CONSTRAINT; Schema: public; Owner: chaussures
+--
+
+ALTER TABLE ONLY public.paire
+    ADD CONSTRAINT paire_chaussure_droite_fk FOREIGN KEY (droite_id) REFERENCES public.chaussure(id) NOT VALID;
+
+
+--
+-- TOC entry 2883 (class 2606 OID 24603)
+-- Name: paire paire_chaussure_gauche_fk; Type: FK CONSTRAINT; Schema: public; Owner: chaussures
+--
+
+ALTER TABLE ONLY public.paire
+    ADD CONSTRAINT paire_chaussure_gauche_fk FOREIGN KEY (gauche_id) REFERENCES public.chaussure(id) NOT VALID;
+
+
+-- Completed on 2021-05-30 23:51:21
+
+--
+-- PostgreSQL database dump complete
+--
+
