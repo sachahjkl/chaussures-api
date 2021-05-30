@@ -1,14 +1,14 @@
 import express, { json, urlencoded } from 'express';
-import addChaussure from './logic.js';
+import {getCouleurs, getNewPaire, getChaussuresDispos, getCouleur} from './logic.js';
 
 const app = express();
 const port = 3000;
 
 // Init
 
-app.use(json());
+app.use(express.json());
 app.use(
-  urlencoded({
+  express.urlencoded({
     extended: true,
   }),
 );
@@ -32,13 +32,30 @@ app.use((_req, res, next) => {
 
 // Routes
 
-app.post('/chaussure', addChaussure);
+// app.post('/chaussures', addChaussure);
+app.get('/paire/new', getNewPaire);
 
 app.get('/', (_request, response) => {
   response.json({ info: 'Node.js, Express, and Postgres API' });
 });
 
-app.listen(port, () => {
-  // eslint-disable-next-line no-console
-  console.log(`App running on port ${port}.`);
-});
+app.get('/chaussures/dispo', (_request, response) => {
+  getChaussuresDispos((chaussures) => {
+    response.status(201).send(chaussures);
+  })
+})
+
+app.get('/couleurs/:id', (request, response) => {
+  const id = request.params.id;
+  getCouleur(id, (couleur) => {
+    response.status(201).send(couleur);
+  })
+})
+
+app.get("/couleurs", (_request, response) => {
+  getCouleurs((couleurs) => {
+    response.status(201).send(couleurs.map((couleur) => couleur.value));
+  })
+})
+
+app.listen(port);
