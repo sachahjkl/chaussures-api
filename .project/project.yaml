@@ -1,0 +1,8 @@
+name: "chaussures-api"
+description: "Démo d'API utilisant ExpressJS et une base de données Sqlite pour gérer des informations sur des chaussures. Implémentation de référence pour un ami."
+topics: []
+homepage: ""
+source:
+  provider: gitlab
+  namespace: "sachahjkl"
+  path: "sachahjkl/chaussures-api"
