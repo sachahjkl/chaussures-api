@@ -1,12 +1,14 @@
-# Pck tu vas galère
+[English](README.md) | [Français](README.fr.md)
 
-## Pour installer les dépendances
+# Because you are going to struggle
+
+## Install the dependencies
 
 ```bash
 npm install
 ```
 
-## Si tu veux lancer le projet
+## Start the project
 
 ```bash
 npm run start
